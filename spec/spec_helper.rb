@@ -15,7 +15,7 @@ Spork.prefork do
   # Requires supporting files with custom matchers and macros, etc,
   # in ./support/ and its subdirectories.
   Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
-
+  
   RSpec.configure do |config|
     # == Mock Framework
     #
@@ -37,6 +37,11 @@ Spork.prefork do
     # Emulate initializer set_clear_dependencies_hook in 
     # railties/lib/rails/application/bootstrap.rb
     ActiveSupport::Dependencies.clear
+    
+    config.before(:each) do
+      full_example_description = "#{self.class.description} #{@method_name}"
+      Rails::logger.info("\n\n#{full_example_description}\n#{'-' * (full_example_description.length)}")
+    end
     
   end
 end
