@@ -43,6 +43,10 @@ Spork.prefork do
       Rails::logger.info("\n\n#{full_example_description}\n#{'-' * (full_example_description.length)}")
     end
     
+    def test_sign_in(user)
+      controller.current_user = user
+    end
+    
   end
 end
 
