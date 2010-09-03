@@ -17,6 +17,19 @@ describe "Users" do
           response.should have_selector("div#error_explanation")
         end.should_not change(User, :count)
       end
+      
+      it "should not retain a password value" do
+        lambda do
+          visit signup_path
+          fill_in "Name",         :with => "Jack Seamus"
+          fill_in "Email",        :with => "sohara@sohara.com"
+          fill_in "Password",     :with => "blahblah"
+          fill_in "Confirmation", :with => "blehbleh"
+          click_button
+          response.should have_selector("div#error_explanation")
+          response.should have_selector("input[name='user[password]'][type='password']", :value => "")
+        end.should_not change(User, :count)
+      end
     end
     
     describe "success" do
